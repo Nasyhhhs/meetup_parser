@@ -51,7 +51,6 @@ def get_event(item):
 
     return event
 
-#.decode('cp1251')
 
 def get_events(items):
     for item in items:
@@ -68,3 +67,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+#
