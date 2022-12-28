@@ -1,6 +1,9 @@
 ﻿from datetime import datetime
 import requests
-from database import check_database
+from database import check_database, get_events
+
+url = 'https://www.meetup.com/gql'
+
 
 cookies = {
     '_cookie-check': 'z_A9DQPOA7G4Mbzw',
@@ -68,26 +71,30 @@ json_data = {
     },
 }
 
-response = requests.post('https://www.meetup.com/gql', cookies=cookies, headers=headers, json=json_data)
+def get_json(url):
+    response = requests.post(url, cookies=cookies, headers=headers, json=json_data)
 
-r=response.json()
-
-fmt = '%Y-%m-%dT%H:%M'
-
-n = 0
-for node in r['data']['rankedEvents']['edges']:
-    city = node.get('node').get('venue').get('city')
-    dt = node.get('node').get('dateTime')[0:-6]
-    data = datetime.strptime(dt, fmt).strftime("(%d %B %Y - %H:%M)")
-
-    if city in ('Moskva', 'Moscow'):
-        n += 1
-        print(n, node.get('node').get('title'), data, node.get('node').get('eventUrl'))
+    r = response.json()
+    items = r['data']['rankedEvents']['edges']
+    return items
 
 
+def get_event(item):
+    event = {}
+    event['event_id'] = item.get('node').get('id')
+    event['title'] = item.get('node').get('title')
+    #city = item.get('node').get('venue').get('city')
+    dt = item.get('node').get('dateTime')[0:-6]
+    event['url'] = item.get('node').get('eventUrl')
+    event['date'] = datetime.strptime(dt, fmt).strftime("(%d %B %Y - %H:%M)")
+
+    return event
 
 
 
+def main():
+    data = get_json(url)
+    get_events(data)
 
 if __name__ == '__main__':
     main()
