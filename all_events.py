@@ -29,13 +29,6 @@ def get_event(item):
     return event
 
 
-def get_events(items):
-    for item in items:
-        event = get_event(item)
-
-        #print(event['title'])
-        check_database(event)
-
 
 def main():
     data = get_json(url)
