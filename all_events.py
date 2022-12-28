@@ -30,6 +30,13 @@ def get_event(item):
 
 
 
+def get_events(items):
+    for item in items:
+        event = get_event(item)
+
+        check_database(event)
+
+
 def main():
     data = get_json(url)
     get_events(data)

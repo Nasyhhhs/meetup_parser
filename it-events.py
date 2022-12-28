@@ -1,7 +1,7 @@
 ﻿import sqlite3
 from bs4 import BeautifulSoup
 import requests
-from database import check_database, get_events
+from database import check_database
 
 url='https://it-events.com'
 
@@ -23,6 +23,11 @@ def get_event(item):
 
 
 
+def get_events(items):
+    for item in items:
+        event = get_event(item)
+
+        check_database(event)
 
 
 
