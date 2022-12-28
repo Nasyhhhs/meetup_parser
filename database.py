@@ -25,3 +25,10 @@ def check_database(item):
         connection.commit() #save data in our db
         print(f"Event {event_id} added into database")
     connection.close()
+
+
+def get_events(items):
+    for item in items:
+        event = get_event(item)
+
+        check_database(event)
