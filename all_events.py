@@ -1,37 +1,14 @@
 # -*- coding: utf-8 -*-
 import sqlite3
-from bs4 import BeautifulSoup
 import time
 from datetime import datetime
+from bs4 import BeautifulSoup
 import requests
-
-def check_database(item):
-    event_id = item['event_id']
-    connection = sqlite3.connect('../db/events.db')
-    cursor = connection.cursor()
-    cursor.execute(""" 
-    SELECT event_id FROM events WHERE event_id =(?)""",
-                   (event_id, ))
-    result = cursor.fetchone()
-    #print(result)
-    if not result:
-
-        #TODO send_telegram(event)
-
-        #запишем в БД
-        cursor.execute(""" 
-        INSERT INTO events
-        VALUES (
-        NULL, :event_id, :title, :date, :url)
-        """, item)
-
-        connection.commit() #save data in our db
-        print(f"Event {event_id} added into database")
-    connection.close()
+from database import check_database
 
 
-def get_json():
-    url = 'https://all-events.ru/events/calendar/theme-is-informatsionnye_tekhnologii/'
+url = 'https://all-events.ru/events/calendar/theme-is-informatsionnye_tekhnologii/'
+def get_json(url):
     response = requests.get(url)
     #print(response.text) текст выводит адекватно
 
@@ -61,10 +38,9 @@ def get_events(items):
 
 
 def main():
-    data = get_json()
+    data = get_json(url)
     get_events(data)
 
 
 if __name__ == '__main__':
     main()
-#
