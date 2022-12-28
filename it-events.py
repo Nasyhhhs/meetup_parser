@@ -1,4 +1,5 @@
 ﻿import sqlite3
+import time
 from bs4 import BeautifulSoup
 import requests
 from database import check_database
@@ -36,4 +37,7 @@ def main():
     get_events(data)
 
 if __name__ == '__main__':
-    main()
+        while True:
+            main()
+            time.sleep(20)
+            break
