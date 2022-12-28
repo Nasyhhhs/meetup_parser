@@ -1,9 +1,10 @@
 ﻿from datetime import datetime
 import requests
-from database import check_database, get_events
+from database import check_database
 
 url = 'https://www.meetup.com/gql'
 
+fmt = '%Y-%m-%dT%H:%M'
 
 cookies = {
     '_cookie-check': 'z_A9DQPOA7G4Mbzw',
@@ -90,6 +91,13 @@ def get_event(item):
 
     return event
 
+
+
+def get_events(items):
+    for item in items:
+        event = get_event(item)
+
+        check_database(event)
 
 
 def main():
