@@ -40,6 +40,7 @@ def get_events(items):
 def main():
     data = get_json(url)
     get_events(data)
+    print('all_done!')
 
 
 if __name__ == '__main__':

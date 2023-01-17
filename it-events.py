@@ -18,7 +18,8 @@ def get_event(item):
         event['title'] = item.find(class_ = 'event-list-item__title').text
         event['date'] = item.find(class_ ='event-list-item__info').text
         event['pay'] = item.find(class_ ="event-list-item__type").text
-        event['url'] = item.find(class_ = 'event-list-item__title').get('href')
+        url2 = item.find(class_ = 'event-list-item__title').get('href')
+        event['url'] = url + url2
         event['event_id'] = event['url'].split('/')[-1]
         return event
 
