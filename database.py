@@ -12,10 +12,10 @@ def check_database(item):
     SELECT event_id FROM events WHERE event_id =(?)""",
                    (event_id, ))
     result = cursor.fetchone()
-    #print(result)
+    print(result)
+
     if not result:
         tg_sendler(item)
-
         #запишем в БД
         cursor.execute(""" 
         INSERT INTO events
